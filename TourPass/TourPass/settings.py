@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -125,5 +126,12 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STRIPE_SECRET_KEY = 'sk_test_51Qa7MgENr5q6hyPBZVs9b2jLXwYAIQc78nZTOpHR0iItMo4w0TsKI3Pd0xjT4UA2e83J5WAR5oe35CJfFSUtBiS000rbICJB16'
-STRIPE_PUBLIC_KEY = 'pk_test_51Qa7MgENr5q6hyPBHgsGsOxTPPWrJKUe4ZK3xU9Tyb7z6PcDSsTqPyY1QorKxEF39bJN85tQxRFobE3mtNnDKC1b005rARLsB6'
+
+
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Use environment variables
+RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID')
+RAZORPAY_KEY_SECRET = os.getenv('RAZORPAY_KEY_SECRET')
