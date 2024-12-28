@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sign Up - TourPass{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-body p-5">
+          <h2 class="text-center mb-4">Create Account</h2>
+          
+          <form method="POST">
+            {% csrf_token %}
+            
+            {% if form.errors %}
+            <div class="alert alert-danger">
+              <ul class="mb-0">
+                {% for field, errors in form.errors.items %}
+                  {% for error in errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                {% endfor %}
+              </ul>
+            </div>
+            {% endif %}
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="first_name" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="last_name" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" required>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="password1" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password1" name="password1" required>
+              <div class="form-text text-muted">
+                Your password must be 8-20 characters long and contain letters and numbers.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="password2" class="form-label">Confirm Password</label>
+              <input type="password" class="form-control" id="password2" name="password2" required>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-warning btn-lg">Sign Up</button>
+            </div>
+
+            <div class="text-center mt-4">
+              <p class="mb-0">Already have an account? 
+                <a href="{% url 'login' %}" class="text-warning">Log In</a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

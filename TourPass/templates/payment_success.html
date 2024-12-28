@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Payment Successful{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title text-success">Payment Successful!</h4>
+    <p>Your booking is confirmed. Details:</p>
+    <p><strong>Booking ID:</strong> {{ booking.id }}</p>
+    <p><strong>Museum:</strong> {{ booking.museum.name }}</p>
+    <p><strong>Date/Time:</strong> {{ booking.timeslot.date }} 
+       ({{ booking.timeslot.time_start }} - {{ booking.timeslot.time_end }})</p>
+    <p><strong>Tickets:</strong> {{ booking.quantity }}</p>
+    <p><strong>Paid:</strong> {{ booking.paid|yesno:"Yes,No" }}</p>
+  </div>
+</div>
+{% endblock %}

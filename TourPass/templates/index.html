@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %} 
+
+{% block title %}Welcome to TourPass{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section 
+  class="py-5 text-center" 
+  style="
+    background: url('{% static 'images/hero-bg.jpg' %}') center center/cover no-repeat; 
+    color: #fff;
+  "
+>
+  <div class="container py-5">
+    <h1 class="fw-bold">Welcome to TourPass</h1>
+    <p class="mb-4">Your Gateway to India's Wonders!</p>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form method="GET" action="#">
+          <div class="input-group">
+            <input 
+              type="text" 
+              class="form-control" 
+              placeholder="Search TourPass"
+              aria-label="Search"
+            >
+            <button class="btn btn-light" type="submit">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Category Buttons -->
+<div class="container py-3">
+  <div class="d-flex flex-wrap justify-content-center gap-3">
+    <button class="btn btn-primary">Art Exhibitions</button>
+    <button class="btn btn-primary">History</button>
+    <button class="btn btn-primary">Science</button>
+    <button class="btn btn-primary">Nature</button>
+    <button class="btn btn-primary">Archaeology</button>
+    <button class="btn btn-primary">Virtual Tours</button>
+    <button class="btn btn-primary">Monuments</button>
+    <button class="btn btn-primary">Events</button>
+  </div>
+</div>
+
+<!-- Filter Buttons (All/Delhi/Noida...) -->
+<div class="container">
+  <div class="d-flex flex-wrap gap-3 mb-4 justify-content-center">
+    <a href="/museums"><button class="btn btn-outline-light">All</button></a>
+    <button class="btn btn-outline-light">Delhi</button>
+    <button class="btn btn-outline-light">Noida</button>
+    <button class="btn btn-outline-light">Ghaziabad</button>
+    <button class="btn btn-outline-light">New</button>
+  </div>
+</div>
+
+
+
+
+<!-- Monuments Section (Now Dynamic) -->
+<div class="container mb-5">
+  <h2 class="text-warning mb-4 text-center">Monuments</h2>
+  <div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for museum in museums %}
+    <div class="col">
+      <div class="card bg-secondary text-light h-100">
+          <a href="/museums/{{museum.id}}/">
+          <img 
+            src="{% static museum.image_location %}" 
+            class="card-img-top" 
+            alt="{{ museum.name }}"
+            style="height: 200px; width: 100%; object-fit: cover;"
+          >
+        </a>
+          <div class="card-body text-center">
+            <h6 class="card-title">{{ museum.name }}</h6>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

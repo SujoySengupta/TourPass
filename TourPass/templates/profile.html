@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Profile - TourPass{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Tech-Themed Profile Banner -->
+    <div class="profile-banner mb-4">
+        <div class="circuit-overlay"></div>
+        <div class="banner-content">
+            <div class="avatar-container">
+                <div class="avatar-ring"></div>
+                {% if user.profile.avatar %}
+                    <img src="{{ user.profile.avatar.url }}" alt="Profile Photo" class="profile-avatar">
+                {% else %}
+                    <div class="avatar-placeholder">
+                        {{ user.first_name|first }}{{ user.last_name|first }}
+                    </div>
+                {% endif %}
+                <button class="change-avatar-btn" title="Change Photo">
+                    <i class="bi bi-camera-fill"></i>
+                </button>
+            </div>
+            <div class="user-info">
+                <h2 class="user-name">{{ user.get_full_name }}</h2>
+                <p class="user-tagline">{{ user.profile.tagline|default:"No tagline set" }}</p>
+                <button class="btn btn-neon btn-sm edit-profile-btn">
+                    <i class="bi bi-pencil-square"></i> Edit Profile
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Left Column -->
+        <div class="col-md-4">
+            <!-- Personal Details -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Personal Details</h5>
+                    <button class="btn btn-link btn-sm p-0">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="detail-item">
+                        <i class="bi bi-envelope"></i>
+                        <span>{{ user.email }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="bi bi-geo-alt"></i>
+                        <span>{{ user.profile.location|default:"Location not set" }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="bi bi-person"></i>
+                        <span>Member since {{ user.date_joined|date:"F Y" }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Settings</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="settings-list">
+                        <a href="#" class="settings-item">
+                            <i class="bi bi-shield-lock"></i>
+                            Change Password
+                        </a>
+                        <a href="#" class="settings-item">
+                            <i class="bi bi-bell"></i>
+                            Notification Preferences
+                        </a>
+                        <a href="#" class="settings-item">
+                            <i class="bi bi-gear"></i>
+                            Account Settings
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-md-8">
+            <!-- Booking History -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">My Bookings</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="nav nav-tabs mb-3" id="bookingTabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#upcoming">Upcoming</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#past">Past</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="upcoming">
+                            {% if upcoming_bookings %}
+                                {% for booking in upcoming_bookings %}
+                                    <div class="booking-item">
+                                        <div class="booking-image">
+                                            <img src="{{ booking.museum.image.url }}" alt="{{ booking.museum.name }}">
+                                        </div>
+                                        <div class="booking-details">
+                                            <h6>{{ booking.museum.name }}</h6>
+                                            <p class="text-muted mb-1">
+                                                <i class="bi bi-calendar"></i> {{ booking.visit_date|date:"F d, Y" }}
+                                            </p>
+                                            <div class="booking-actions">
+                                                <a href="#" class="btn btn-sm btn-outline-primary">View Ticket</a>
+                                                <a href="#" class="btn btn-sm btn-outline-danger">Cancel</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-muted text-center py-3">No upcoming bookings</p>
+                            {% endif %}
+                        </div>
+                        <div class="tab-pane fade" id="past">
+                            {% if past_bookings %}
+                                {% for booking in past_bookings %}
+                                    <div class="booking-item">
+                                        <!-- Similar structure as upcoming bookings -->
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-muted text-center py-3">No past bookings</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Favorites -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">My Favorites</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        {% if favorites %}
+                            {% for favorite in favorites %}
+                                <div class="col-md-6">
+                                    <div class="favorite-item">
+                                        <img src="{{ favorite.museum.image.url }}" alt="{{ favorite.museum.name }}">
+                                        <div class="favorite-details">
+                                            <h6>{{ favorite.museum.name }}</h6>
+                                            <p class="text-muted mb-0">{{ favorite.museum.location }}</p>
+                                        </div>
+                                        <button class="btn btn-link remove-favorite">
+                                            <i class="bi bi-heart-fill"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="col-12">
+                                <p class="text-muted text-center py-3">No favorites added yet</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

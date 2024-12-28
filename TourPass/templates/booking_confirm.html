@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirm Booking{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Confirm Your Booking</h4>
+    <p><strong>Museum:</strong> {{ booking.museum.name }}</p>
+    <p><strong>Date/Time:</strong> {{ booking.timeslot.date }} 
+       ({{ booking.timeslot.time_start }} - {{ booking.timeslot.time_end }})</p>
+    <p><strong>Tickets:</strong> {{ booking.quantity }}</p>
+    <p><strong>Total Price:</strong> ${{ booking.total_price }}</p>
+    
+    <a href="{% url 'payment_page' booking.id %}" class="btn btn-custom">Proceed to Payment</a>
+  </div>
+</div>
+{% endblock %}

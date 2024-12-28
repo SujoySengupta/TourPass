@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Payment{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-body text-center">
+    <h4>Complete Your Payment</h4>
+    <p>Total: &#x20B9;{{ amount }}</p>
+    
+    <!-- Stripe Elements or a redirect to Stripe Checkout -->
+    <button id="checkout-button" class="btn btn-custom">Pay Now</button>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://js.stripe.com/v3/"></script>
+{% endblock %}

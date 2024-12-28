@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}TourPass{% endblock %}</title>
+
+  <!-- Dark Bootstrap (e.g., Bootswatch “Darkly”) -->
+  <link 
+    rel="stylesheet" 
+    href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/darkly/bootstrap.min.css"
+  >
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-dark text-light">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold fs-3 text-warning" href="/">TourPass</a>
+      <button 
+        class="navbar-toggler" 
+        type="button" 
+        data-bs-toggle="collapse" 
+        data-bs-target="#navbarSupportedContent" 
+        aria-controls="navbarSupportedContent" 
+        aria-expanded="false" 
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item mx-2">
+            <a class="nav-link" href="#">Discover</a>
+          </li>
+          <li class="nav-item mx-2">
+            <a class="nav-link" href="#">QR Tickets</a>
+          </li>
+          {% if user.is_authenticated %}
+            <li class="nav-item mx-2">
+              <div class="profile-dropdown">
+                <button class="profile-button">
+                  {{ user.username|first }}
+                </button>
+                <div class="profile-dropdown-content">
+            
+                  <a href="{% url 'profile' %}">
+                    <i class="bi bi-person"></i> My Profile
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a href="{% url 'logout' %}">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                  </a>
+                </div>
+              </div>
+            </li>
+          {% else %}
+            <li class="nav-item auth-buttons">
+              <a class="btn btn-outline-light" href="{% url 'signup' %}">Sign Up</a>
+              <a class="btn btn-warning text-dark fw-bold" href="{% url 'login' %}">Log In</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-md-start bg-dark text-light mt-5">
+    <div class="container p-4">
+      <div class="row">
+        <!-- About TourPass -->
+        <div class="col-md-4 mb-3">
+          <h5 class="text-orange">About TourPass</h5>
+          <p class="text-muted">
+            Discover India’s top museums, monuments, and more.  
+            Experience culture and history at your fingertips with TourPass.
+          </p>
+        </div>
+        <!-- Quick Links -->
+        <div class="col-md-4 mb-3">
+          <h5 class="text-orange">Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="/" class="text-light" style="text-decoration: none;">Home</a></li>
+            <li><a href="{% url 'museum_list' %}" class="text-light" style="text-decoration: none;">Discover</a></li>
+            <li><a href="#" class="text-light" style="text-decoration: none;">Tickets</a></li>
+            <li><a href="#" class="text-light" style="text-decoration: none;">Events</a></li>
+            <li><a href="#" class="text-light" style="text-decoration: none;">Contact Us</a></li>
+          </ul>
+        </div>
+        <!-- Stay Connected -->
+        <div class="col-md-4 mb-3">
+          <h5 class="text-orange">Stay Connected</h5>
+          <p>
+            <a href="#" class="text-light me-3"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-light me-3"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="text-light me-3"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="text-light me-3"><i class="bi bi-youtube"></i></a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="text-center p-3 text-muted">
+      © 2024 TourPass | Created with <span class="text-danger">&hearts;</span> by Rookie Squad | All Rights Reserved.
+    </div>
+  </footer>
+
+  <!-- Scroll to top button (floating) -->
+  <button 
+    onclick="window.scrollTo({top: 0, behavior: 'smooth'});" 
+    class="btn btn-pink" 
+    style="position: fixed; bottom: 20px; right: 20px; border-radius: 50%;"
+  >
+    <span class="text-light">&#8593;</span>
+  </button>
+
+  <!-- Bootstrap JS -->
+  <script 
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  ></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

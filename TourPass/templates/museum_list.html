@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}All Museums{% endblock %}
+
+{% block content %}
+<div class="row mb-4 justify-content-center">
+  <div class="col-md-6">
+    <form method="GET" class="d-flex">
+      <input 
+        type="text" 
+        class="form-control me-2" 
+        name="q" 
+        placeholder="Search by name or location..."
+        value="{{ query|default_if_none:'' }}"
+      >
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+  </div>
+</div>
+
+<!-- Redesign: Monuments Section -->
+<div class="container my-5">
+  <h2 class="text-warning mb-4 text-center">Discover Monuments</h2>
+  
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for museum in museums %}
+      <div class="col">
+        <div class="card bg-dark text-light h-100">
+          <!-- Card Image -->
+          <img 
+            src="{% static museum.image_location %}" 
+            class="card-img-top" 
+            alt="{{ museum.name }}"
+            style="height: 200px; object-fit: cover;"
+          >
+          
+          <!-- Card Body -->
+          <div class="card-body">
+            <h5 class="card-title">{{ museum.name }}</h5>
+            
+            <!-- Additional Info -->
+            <p class="card-text mb-2">
+              <strong>Location:</strong> {{ museum.location }}<br>
+              <strong>Hours:</strong> {{ museum.opening_hour }}
+            </p>
+            
+            <!-- View Details Button (Adjust link as needed) -->
+            <a href="{% url 'museum_detail' museum.id %}" 
+               class="btn btn-warning">
+              View Details
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
