@@ -1,42 +1,44 @@
 body {
-    background-color: #181818; /* or keep default from .bg-dark if you prefer */
+    background-color: #000000;/* or keep default from .bg-dark if you prefer */
     color: #fff;
 }
+
 
 .btn-pink {
     background-color: #ff00aa;
     color: #fff;
 }
-  
+
 .btn-pink:hover {
     background-color: #e00098;
     color: #fff;
 }
-  
+
 .text-orange {
     color: #ff6600 !important;
 }
+
 .profile-dropdown {
     position: relative;
     display: inline-block;
 }
-  
+
 .profile-dropdown-content {
     display: none;
     position: absolute;
     right: 0;
     background-color: #343a40;
     min-width: 160px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
     border-radius: 4px;
     border: 1px solid #454d55;
 }
-  
+
 .profile-dropdown:hover .profile-dropdown-content {
     display: block;
 }
-  
+
 .profile-dropdown-content a {
     color: white;
     padding: 12px 16px;
@@ -44,16 +46,16 @@ body {
     display: block;
     transition: background-color 0.3s;
 }
-  
+
 .profile-dropdown-content a:hover {
     background-color: #454d55;
 }
-  
+
 .profile-dropdown-content .dropdown-divider {
     border-top: 1px solid #454d55;
     margin: 0;
 }
-  
+
 .profile-button {
     width: 40px;
     height: 40px;
@@ -68,16 +70,17 @@ body {
     font-size: 1.2rem;
     text-transform: uppercase;
     color: #000;
-  }
-  
-  .profile-button:hover {
+}
+
+.profile-button:hover {
     background-color: #e0a800;
-  }
+}
+
 .profile-icon {
     font-size: 1.5rem;
     color: #000;
 }
-  
+
 .auth-buttons .btn {
     padding: 8px 20px;
     margin-left: 10px;

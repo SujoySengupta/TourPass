@@ -1,18 +1,18 @@
 .form-check-input:checked {
-    background-color: #ffc107;
-    border-color: #ffc107;
-  }
-  
-  .form-check-input:focus {
-    border-color: #ffc107;
-    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
-  }
-  
-  .text-muted {
-    text-decoration: none;
-  }
-  
-  .text-muted:hover {
-    text-decoration: underline;
-    color: #6c757d !important;
-  }
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+
+.form-check-input:focus {
+  border-color: #ffc107;
+  box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+}
+
+.text-muted {
+  text-decoration: none;
+}
+
+.text-muted:hover {
+  text-decoration: underline;
+  color: #6c757d !important;
+}

@@ -19,14 +19,14 @@
   </div>
 </div>
 
-<!-- Redesign: Monuments Section -->
+<!-- Monuments Section -->
 <div class="container my-5">
   <h2 class="text-warning mb-4 text-center">Discover Monuments</h2>
   
   <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for museum in museums %}
       <div class="col">
-        <div class="card bg-dark text-light h-100">
+        <div class="card bg-dark text-light h-100 mo">
           <!-- Card Image -->
           <img 
             src="{% static museum.image_location %}" 
