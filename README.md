@@ -32,7 +32,7 @@ TourPass is a modern web application that simplifies museum ticket booking and m
 - **Backend**
   - Django
   - PostgreSQL
-  - Redis (for caching)
+
 
 - **Frontend**
   - HTML5/CSS3
@@ -46,6 +46,15 @@ TourPass is a modern web application that simplifies museum ticket booking and m
 ## Installation
 
 1. Clone the repository:
+```bash
+git clone https://github.com/TGSK07/TourPass.git
+cd TourPass
+```
+
+2. Create and activate virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate # On Windows: .\venv\Scripts\activate
 ```
 
 3. Install dependencies:
@@ -53,18 +62,13 @@ TourPass is a modern web application that simplifies museum ticket booking and m
 pip install -r requirements.txt
 ```
 
-4. Configure environment variables:
-```bash
-cp .env.example .env
-# Edit .env with your settings
-```
 
-5. Run migrations:
+4. Run migrations:
 ```bash
 python manage.py migrate
 ```
 
-6. Start the development server:
+5. Start the development server:
 ```bash
 python manage.py runserver
 ```
@@ -90,7 +94,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-Project Link: [https://github.com/yourusername/TourPass](https://github.com/yourusername/TourPass)
+Project Link: [https://github.com/TGSK07/TourPass](https://github.com/TGSK07/TourPass)
 
 ## Acknowledgments
 
