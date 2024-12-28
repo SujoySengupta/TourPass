@@ -2,6 +2,14 @@
 
 TourPass is a modern web application that simplifies museum ticket booking and management. It provides an intuitive interface for users to discover museums, purchase tickets, and manage their visits.
 
+## Team - Rookie Squad
+
+- **Team Members:**
+  - Sonu Kumar ([TGSK07](https://github.com/TGSK07))
+  - Shubham Maurya ([shubham-maurya](https://github.com/ShubhamMaurya7/))
+  - Abhijeet Dutta ([abhijit-dutta](https://github.com/abhijit-dutta))
+  - Sujoy Sengupta ([SujoySengupta](https://github.com/SujoySengupta))
+
 ## Features
 
 - **User Authentication**
