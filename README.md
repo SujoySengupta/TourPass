@@ -53,7 +53,8 @@ TourPass is a modern web application that simplifies museum ticket booking and m
 
 ## Installation
 
-1. Clone the repository:```bash
+1. Clone the repository:
+```bash
 git clone https://github.com/TGSK07/TourPass.git
 cd TourPass
 ```
