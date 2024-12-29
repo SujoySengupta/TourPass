@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
@@ -21,6 +22,12 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 return redirect('home')
+            else:
+                # Invalid login
+                return render(request, 'registration/login.html', {'form': form, 'error': 'Invalid username or password'})
+        else:
+            # Form is not valid
+            return render(request, 'registration/login.html', {'form': form, 'error': 'Invalid username or password'})
     else:
         form = AuthenticationForm()
     return render(request,'registration/login.html',{'form':form})
