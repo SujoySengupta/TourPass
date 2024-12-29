@@ -18,10 +18,19 @@ def login_view(request):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
+<<<<<<< HEAD
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
                 return redirect('home')
+=======
+            user = login(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+            else:
+                return render(request, 'registration/login.html', {'form': form, 'error': 'Invalid username or password. Please enter carefully.'})
+>>>>>>> a941cec0e2dde49397aa4c60cf85ecd94423e9cd
     else:
         form = AuthenticationForm()
     return render(request,'registration/login.html',{'form':form})
