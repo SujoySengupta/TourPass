@@ -43,7 +43,7 @@
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Personal Details</h5>
-                    <button class="btn btn-link btn-sm p-0">
+                    <button class="btn btn-link btn-sm p-0" title="Edit Personal Details">
                         <i class="bi bi-pencil"></i>
                     </button>
                 </div>
@@ -70,19 +70,28 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="settings-list">
+
+
                         <ul>
+                        <!-- Changed this into an unorderd list for better view -->
+                        
                         <li><a href="#" class="settings-item">
                             <i class="bi bi-shield-lock"></i>
-                            Change Password
-                        </a></li>
+                            Change Password 
+                        </a>
+                        </li>
+
                         <li><a href="#" class="settings-item">
                             <i class="bi bi-bell"></i>
-                            Notification Preferences
-                        </a></li>
+                            Notification Preferences 
+                        </a>
+                        </li>
+
                         <li><a href="#" class="settings-item">
                             <i class="bi bi-gear"></i>
-                            Account Settings
-                        </a></li>
+                            Account Settings 
+                        </a>
+                        </li>
                         </ul>
                     </div>
                 </div>
@@ -160,7 +169,7 @@
                                             <h6>{{ favorite.museum.name }}</h6>
                                             <p class="text-muted mb-0">{{ favorite.museum.location }}</p>
                                         </div>
-                                        <button class="btn btn-link remove-favorite">
+                                        <button class="btn btn-link remove-favorite" title="Remove from favorites">
                                             <i class="bi bi-heart-fill"></i>
                                         </button>
                                     </div>
