@@ -1,5 +1,6 @@
 body {
-    background-color: #000000;/* or keep default from .bg-dark if you prefer */
+    background-color: #000000;
+    /* or keep default from .bg-dark if you prefer */
     color: #fff;
 }
 
@@ -85,5 +86,3 @@ body {
     padding: 8px 20px;
     margin-left: 10px;
 }
-
-

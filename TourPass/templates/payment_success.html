@@ -12,7 +12,7 @@
     <p><strong>Date/Time:</strong> {{ booking.timeslot.date }} 
        ({{ booking.timeslot.time_start }} - {{ booking.timeslot.time_end }})</p>
     <p><strong>Tickets:</strong> {{ booking.quantity }}</p>
-    <p><strong>Paid:</strong> {{ booking.paid|yesno:"Yes,No" }}</p>
+    <p><strong>Payment Status:</strong> {{ booking.status}}</p>
   </div>
 </div>
 {% endblock %}

@@ -1,12 +1,12 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.db.models import Q
+import razorpay.errors
 from .models import *
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
-import stripe
+import razorpay
 from django.conf import settings
 from django.core.mail import send_mail
-from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -26,55 +26,92 @@ def museum_detail_view(request,pk):
     return render(request,'museum_detail.html',{'museum':museum,'time_slots':time_slots})
 
 @login_required
-def book_ticket_view(request,museum_id):
+def book_ticket_view(request, museum_id):
     if request.method == 'POST':
-        museum = get_object_or_404(Museum,pk=museum_id)
-        timeslot_id = request.POST.get('timeslot')
-        quantity = int(request.POST.get('quantity',1))
+        museum = get_object_or_404(Museum, pk=museum_id)
+        timeslot_id = request.POST.get('timeslot')  # Assuming you're sending timeslot_id from the form
+        quantity = int(request.POST.get('quantity', 1))
 
-        timeslot = get_object_or_404(TimeSlot,pk=timeslot_id,museum=museum)
+        # Get the timeslot
+        timeslot = get_object_or_404(TimeSlot, pk=timeslot_id)
 
-        if timeslot.remaining_tickets<quantity:
-            return HttpResponseBadRequest("Not enough tickets available.")
-        
-        timeslot.remaining_tickets -= quantity
-        timeslot.save()
+        # Create booking with pending status
+        booking = Booking.objects.create(
+            user=request.user,
+            museum=museum,
+            timeslot=timeslot,  # Use timeslot instead of visit_date
+            quantity=quantity,
+            status='pending'
+        )
 
-        booking = Booking.objects.create(user=request.user,museum=museum,timeslot=timeslot,quantity=quantity)
-
-        return redirect('payment_page',booking_id=booking.id)
+        try:
+            return redirect('payment_page', booking_id=booking.id)
+        except Exception as e:
+            booking.delete()
+            return HttpResponseBadRequest('Payment initialization failed')
+            
     return HttpResponseBadRequest('invalid request.')
 
 # @login_required
 def payment_view(request,booking_id):
-    booking = get_object_or_404(Booking,pk=booking_id,user=request.user,paid=False)
-    stripe.api_key = settings.STRIPE_SECRET_KEY
-
-    price_per_ticket = 100
-    amount = price_per_ticket*booking.quantity
-
-    session = stripe.checkout.Session.create(
-        payment_method_types=['card'],
-        line_items=[{
-            'price_data':{'currency':'usd','product_data':{'name':booking.museum.name},'unit_amount':price_per_ticket,},
-            'quantity':booking.quantity,
-        },],
-        mode='payment',
-        success_url=request.build_absolute_uri('/payment-success/')+f"?session_id={{CHECHOUT_SESSION_ID}}&booking_id={booking.id}",
-        cancel_url=request.build_absolute_uri('/payment-cancel/'),
+    booking = get_object_or_404(
+        Booking, 
+        pk=booking_id, 
+        user=request.user, 
+        status='pending'
     )
-    return render(request,'payment.html',{'session_id':session.id,'stripe_public_key':settings.STRIPE_PUBLIC_KEY})
+    
+    # Initialize razorpay cilent
+    client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID,settings.RAZORPAY_KEY_SECRET))
+    
+    # Convert INR to paise
+    amount = int(booking.total_price*100)
 
-# @login_required
-def payment_succes_view(request):
-    session_id = request.GET.get('session_id')
-    booking_id = request.GET.get('booking_id')
+    # Create a Razorpay order
+    order_data = {
+        'amount':amount,
+        'currency':'INR',
+        'payment_capture':1,
+    }
+    razorpay_order = client.order.create(data=order_data)
 
-    booking = get_object_or_404(Booking,pk=booking_id,user=request.user)
-    booking.paid = True
+    # Store the order_id in the booking so we can verify payment later
+    booking.razorpay_order_id = razorpay_order.get('id')
     booking.save()
+    context = {
+        'booking':booking,
+        'order_id':razorpay_order['id'],
+        'order_amount':amount,
+        'api_key':settings.RAZORPAY_KEY_ID,
+    }
+    return render(request,'payment.html',context)
 
-    subject = 'Museum ticket Booking Confirmation'
-    message = f"Hello {booking.user.username},\n\nYour Booking for {booking.museum.name} is confirmed."
-    send_mail(subject,message,settings.EMAIL_HOST_USER,[booking.user.email])
-    return render(request,'payment_success.html',{'booking':booking})
+@login_required
+def payment_succes_view(request):
+    payment_id = request.GET.get('payment_id')
+    order_id = request.GET.get('order_id')
+    signature = request.GET.get('signature')
+
+    if not (payment_id and order_id and signature):
+        return render(request, 'payment_failed.html', {'message': 'Payment parameters are missing.'})
+    
+    booking = get_object_or_404(Booking, razorpay_order_id=order_id)
+    client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+    
+    # Fix the typo in 'razorpay_payment_id'
+    params_dict = {
+        'razorpay_payment_id': payment_id,  # Fix typo here
+        'razorpay_order_id': order_id,
+        'razorpay_signature': signature
+    }
+
+    try:
+        client.utility.verify_payment_signature(params_dict)
+        booking.razorpay_payment_id = payment_id
+        booking.razorpay_signature = signature
+        booking.status = 'confirmed'
+        booking.save()
+        return render(request, 'payment_success.html', {'booking': booking})
+    except razorpay.errors.SignatureVerificationError:
+        return render(request, 'payment_failed.html', 
+                     {'message': 'Payment verification failed: Please contact support.'})

@@ -46,6 +46,16 @@ class TimeSlot(models.Model):
         self.save()
 
 class Booking(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('confirmed', 'Confirmed'),
+        ('cancelled', 'Cancelled'),
+    ]
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default='pending'
+    )
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
         on_delete=models.CASCADE, 
@@ -64,8 +74,9 @@ class Booking(models.Model):
     )
     quantity = models.PositiveIntegerField(default=1)
     booking_date = models.DateTimeField(auto_now_add=True)
-    paid = models.BooleanField(default=False)
-    # Optionally, store payment info like a transaction ID or payment timestamp.
+    razorpay_order_id = models.CharField(max_length=100, null=True, blank=True)
+    razorpay_payment_id = models.CharField(max_length=100, null=True, blank=True)
+    razorpay_signature = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return f"Booking #{self.id} by {self.user.username} for {self.museum.name}"
@@ -73,8 +84,9 @@ class Booking(models.Model):
     @property
     def total_price(self):
         """
-        Calculates the total price for this booking.
+        Return the total amount (INR) for this booking.
+        If timeslot or museum has a price, multiply by quantity, etc.
         """
-        if self.timeslot and self.timeslot.price_per_ticket:
-            return self.quantity * self.timeslot.price_per_ticket
+        if self.timeslot and self.museum.price_per_ticket:
+            return self.quantity * self.museum.price_per_ticket
         return 0

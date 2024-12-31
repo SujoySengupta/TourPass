@@ -10,9 +10,7 @@ def home(request):
     return render(request,'index.html',{'museums':museums})
 
 def login_view(request):
-    '''
-    For Sujoy, complete the login view.
-    '''
+ 
     return render(request,'registration/login.html',{'form':form})
 
 

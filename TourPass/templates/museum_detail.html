@@ -32,8 +32,10 @@
       {% csrf_token %}
       <div class="row">
         <div class="col-md-6">
-          <div id="datepicker" class="mb-3"></div>
-          <input type="hidden" id="visit_date" name="visit_date" required>
+          <div class="mb-3">
+            <label for="timeslot" class="form-label">Select Time Slot:</label>
+            <input type="date" class="form-control" name="visit_date" id="visit_date" required min="{% now 'Y-m-d' %}">
+          </div>
         </div>
         <div class="col-md-6">
           <div class="mt-3">
@@ -54,39 +56,6 @@
 </div>
 
 <!-- Add JavaScript with Flatpickr -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Initialize Flatpickr calendar
-  try {
-    const datePicker = flatpickr("#datepicker", {
-      inline: true,
-      minDate: "today",
-      dateFormat: "Y-m-d",
-      onChange: function(selectedDates, dateStr) {
-        if (selectedDates.length > 0) {
-          document.getElementById('visit_date').value = dateStr;
-        }
-      }
-    });
-  } catch (error) {
-    console.error("Error initializing calendar:", error);
-  }
+<script src="{% static 'js/museum_details.js' %}"></script>
 
-  // Update total price when quantity changes
-  const quantityInput = document.getElementById('quantity');
-  const pricePerTicket = {{ museum.price_per_ticket }};
-
-  function updateTotalPrice() {
-    const quantity = parseInt(quantityInput.value) || 1;
-    const total = pricePerTicket * quantity;
-    document.getElementById('total_price').textContent = '₹' + total.toFixed(2);
-  }
-
-  if (quantityInput) {
-    quantityInput.addEventListener('input', updateTotalPrice);
-  }
-});
-</script>
 {% endblock %}
