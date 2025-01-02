@@ -11,7 +11,20 @@
         <h2 class="card-title">{{ museum.name }}</h2>
         <p class="card-text">{{ museum.description }}</p>
         <p><strong>Location:</strong> {{ museum.location }}</p>
-        <p><strong>Opening Hours:</strong> {{ museum.opening_hour }}</p>
+        <p><strong>Opening Hours:</strong> {{ museum.opening_hour }} - {{ museum.closing_hour }}</p>
+        {% if museum.closing_days %}
+          <p><strong>Closing Days:</strong> 
+            {% for day in museum.closing_days|make_list %}
+              {% if day == '1' %}Mon{% if not forloop.last %}, {% endif %}{% endif %}
+              {% if day == '2' %}Tue{% if not forloop.last %}, {% endif %}{% endif %}
+              {% if day == '3' %}Wed{% if not forloop.last %}, {% endif %}{% endif %}
+              {% if day == '4' %}Thu{% if not forloop.last %}, {% endif %}{% endif %}
+              {% if day == '5' %}Fri{% if not forloop.last %}, {% endif %}{% endif %}
+              {% if day == '6' %}Sat{% if not forloop.last %}, {% endif %}{% endif %}
+              {% if day == '7' %}Sun{% if not forloop.last %}, {% endif %}{% endif %}
+            {% endfor %}
+          </p>
+        {% endif %}
       </div>
       <div class="col-md-5">
         {% if museum.image_location %}

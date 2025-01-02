@@ -108,19 +108,19 @@
                 <div class="card-body">
                     <ul class="nav nav-tabs mb-3" id="bookingTabs">
                         <li class="nav-item">
-                            <a class="nav-link active" data-bs-toggle="tab" href="#upcoming">Upcoming</a>
+                            <a class="nav-link active" data-bs-toggle="tab" href="#">Today</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#past">Past</a>
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="upcoming">
-                            {% if upcoming_bookings %}
-                                {% for booking in upcoming_bookings %}
+                        <div class="tab-pane fade show active" id="today">
+                            {% if today_bookings %}
+                                {% for booking in today_bookings %}
                                     <div class="booking-item">
                                         <div class="booking-image">
-                                            <img src="{{ booking.museum.image.url }}" alt="{{ booking.museum.name }}">
+                                            <img src="{{ booking.museum.image_location }}" alt="{{ booking.museum.name }}">
                                         </div>
                                         <div class="booking-details">
                                             <h6>{{ booking.museum.name }}</h6>
@@ -135,14 +135,14 @@
                                     </div>
                                 {% endfor %}
                             {% else %}
-                                <p class="text-muted text-center py-3">No upcoming bookings</p>
+                                <p class="text-muted text-center py-3">No today bookings</p>
                             {% endif %}
                         </div>
                         <div class="tab-pane fade" id="past">
                             {% if past_bookings %}
                                 {% for booking in past_bookings %}
                                     <div class="booking-item">
-                                        <!-- Similar structure as upcoming bookings -->
+                                        <!-- Similar structure as today bookings -->
                                     </div>
                                 {% endfor %}
                             {% else %}
@@ -156,7 +156,7 @@
             <!-- Favorites -->
             <div class="card mb-4">
                 <div class="card-header">
-                    <h5 class="mb-0">My Favorites</h5>
+                    <h5 class="mb-0">Favorites Places</h5>
                 </div>
                 <div class="card-body">
                     <div class="row g-3">
@@ -164,7 +164,7 @@
                             {% for favorite in favorites %}
                                 <div class="col-md-6">
                                     <div class="favorite-item">
-                                        <img src="{{ favorite.museum.image.url }}" alt="{{ favorite.museum.name }}">
+                                        <img src="{{ favorite.museum.image_location }}" alt="{{ favorite.museum.name }}">
                                         <div class="favorite-details">
                                             <h6>{{ favorite.museum.name }}</h6>
                                             <p class="text-muted mb-0">{{ favorite.museum.location }}</p>

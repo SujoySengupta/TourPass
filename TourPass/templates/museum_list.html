@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
+
 {% block title %}All Museums{% endblock %}
 
 {% block content %}
@@ -26,7 +27,7 @@
   <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for museum in museums %}
       <div class="col">
-        <div class="card bg-dark text-light h-100 mo">
+        <div class=" bg-dark text-light h-100">
           <!-- Card Image -->
           <img 
             src="{% static museum.image_location %}" 
@@ -42,7 +43,7 @@
             <!-- Additional Info -->
             <p class="card-text mb-2">
               <strong>Location:</strong> {{ museum.location }}<br>
-              <strong>Hours:</strong> {{ museum.opening_hour }}
+              <strong>Hours:</strong> {{ museum.opening_hour }} - {{ museum.closing_hour }}
             </p>
             
             <!-- View Details Button (Adjust link as needed) -->

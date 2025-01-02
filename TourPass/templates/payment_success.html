@@ -7,12 +7,13 @@
   <div class="card-body">
     <h4 class="card-title text-success">Payment Successful!</h4>
     <p>Your booking is confirmed. Details:</p>
-    <p><strong>Booking ID:</strong> {{ booking.id }}</p>
+    <p><strong>Booking ID:</strong> {{ booking.razorpay_order_id|slice:"6:" }}</p>
     <p><strong>Museum:</strong> {{ booking.museum.name }}</p>
-    <p><strong>Date/Time:</strong> {{ booking.timeslot.date }} 
-       ({{ booking.timeslot.time_start }} - {{ booking.timeslot.time_end }})</p>
+    <p><strong>Date:</strong> {{ booking.visit_date|date:"d M, Y" }}</p>
+    <p><strong>Time:</strong> {{ booking.museum.opening_hour|time:"g:i A" }} - {{ booking.museum.closing_hour|time:"g:i A" }}</p>
     <p><strong>Tickets:</strong> {{ booking.quantity }}</p>
     <p><strong>Payment Status:</strong> {{ booking.status}}</p>
+    <p><strong>Total Price:</strong> {{ booking.total_price }}</p>
   </div>
 </div>
 {% endblock %}

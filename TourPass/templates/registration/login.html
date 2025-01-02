@@ -58,7 +58,15 @@
             </div>
 
             <div class="text-center mt-4">
-                <a href="/" class="text-muted">Forgot your password?</a>
+              <p class="text-muted">or login with</p>
+              <a href="#" class="btn btn-outline-light btn-lg d-flex align-items-center justify-content-center gap-4 mx-auto" style="max-width: 300px;">
+                <img src="{% static 'images/logos/google.png' %}" alt="Google" style="width: 24px; height: 24px;">
+                Continue with Google
+              </a>
+            </div>
+
+            <div class="text-center mt-4">
+              <a href="/" class="text-muted" style="text-decoration: none;">Forgot your password?</a>
               <p class="mb-0">Don't have an account? 
                 <a href="{% url 'signup' %}" class="text-warning">Sign Up</a>
               </p>

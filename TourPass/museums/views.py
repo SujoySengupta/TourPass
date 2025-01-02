@@ -21,36 +21,35 @@ def museum_list_view(request):
     return render(request,'museum_list.html',{'museums':museums,'query':query}) 
 
 def museum_detail_view(request,pk):
-    museum = Museum.objects.get(pk=pk)
-    time_slots = museum.time_slots.all().order_by('date','time_start')
-    return render(request,'museum_detail.html',{'museum':museum,'time_slots':time_slots})
+    museum = get_object_or_404(Museum, pk=pk)
+    return render(request,'museum_detail.html',{'museum':museum})
 
 @login_required
 def book_ticket_view(request, museum_id):
     if request.method == 'POST':
         museum = get_object_or_404(Museum, pk=museum_id)
-        timeslot_id = request.POST.get('timeslot')  # Assuming you're sending timeslot_id from the form
-        quantity = int(request.POST.get('quantity', 1))
-
-        # Get the timeslot
-        timeslot = get_object_or_404(TimeSlot, pk=timeslot_id)
-
-        # Create booking with pending status
-        booking = Booking.objects.create(
-            user=request.user,
-            museum=museum,
-            timeslot=timeslot,  # Use timeslot instead of visit_date
-            quantity=quantity,
-            status='pending'
-        )
-
         try:
+            visit_date = request.POST.get('visit_date')
+            quantity = int(request.POST.get('quantity', 1))
+
+            if not all([visit_date, quantity]):
+                return HttpResponseBadRequest('Missing required booking information')
+
+            booking = Booking.objects.create(
+                user=request.user,
+                museum=museum,
+                visit_date=visit_date,
+                quantity=quantity,
+                status='pending'
+            )
+
             return redirect('payment_page', booking_id=booking.id)
+        except ValueError as e:
+            return HttpResponseBadRequest(f'Invalid input: {str(e)}')
         except Exception as e:
-            booking.delete()
-            return HttpResponseBadRequest('Payment initialization failed')
+            return HttpResponseBadRequest(f'Booking failed: {str(e)}')
             
-    return HttpResponseBadRequest('invalid request.')
+    return HttpResponseBadRequest('Invalid request.')
 
 # @login_required
 def payment_view(request,booking_id):

@@ -7,8 +7,7 @@
   <div class="card-body">
     <h4 class="card-title">Confirm Your Booking</h4>
     <p><strong>Museum:</strong> {{ booking.museum.name }}</p>
-    <p><strong>Date/Time:</strong> {{ booking.timeslot.date }} 
-       ({{ booking.timeslot.time_start }} - {{ booking.timeslot.time_end }})</p>
+    <p><strong>Date/Time:</strong> {{ booking.visit_date }}</p>
     <p><strong>Tickets:</strong> {{ booking.quantity }}</p>
     <p><strong>Total Price:</strong> ${{ booking.total_price }}</p>
     

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %} 
 
-{% block title %}Welcome to TourPass{% endblock %}
+{% block title %}Welcome to MeraTicket{% endblock %}
 
 {% block content %}
 
@@ -32,55 +32,79 @@
   </div>
 </section>
 
-<!-- Category Buttons -->
-<div class="container py-3">
-  <div class="d-flex flex-wrap justify-content-center gap-3 p-2">
-    <button class="btn btn-primary">Art Exhibitions</button>
-    <button class="btn btn-primary">History</button>
-    <button class="btn btn-primary">Science</button>
-    <button class="btn btn-primary">Nature</button>
-    <button class="btn btn-primary">Archaeology</button>
-    <button class="btn btn-primary">Virtual Tours</button>
-    <button class="btn btn-primary">Monuments</button>
-    <button class="btn btn-primary">Events</button>
-  </div>
-</div>
+<!-- New Layout with Filters -->
+<div class="py-4">
+  <div class="row">
+    <!-- Left Sidebar Filters -->
+    <div class="col-md-2 ps-0 mt-5 pt-4">
+      <div class="card bg-secondary mb-4 ms-4">
+        <div class="card-header">
+          <h5 class="card-title mb-0 text-light">Filters</h5>
+        </div>
+        <div class="card-body">
 
-<!-- Filter Buttons (All/Delhi/Noida...) -->
-<div class="container">
-  <div class="d-flex flex-wrap gap-3 mb-4 justify-content-center">
-    <a href="/museums"><button class="btn btn-outline-light">All</button></a>
-    <button class="btn btn-outline-light">Delhi</button>
-    <button class="btn btn-outline-light">Noida</button>
-    <button class="btn btn-outline-light">Ghaziabad</button>
-    <button class="btn btn-outline-light">New</button>
-  </div>
-</div>
+          <!-- Category Filter -->
+          <div class="mb-4">
+            <label class="form-label text-light">Category</label>
+            <select class="form-select" id="categoryFilter">
+              <option value="">All Categories</option>
+              <option value="art">Art Exhibitions</option>
+              <option value="history">History</option>
+              <option value="science">Science</option>
+              <option value="nature">Nature</option>
+              <option value="archaeology">Archaeology</option>
+              <option value="virtual">Virtual Tours</option>
+              <option value="monuments">Monuments</option>
+              <option value="events">Events</option>
+            </select>
+          </div>
+          
+          <!-- Location Filter -->
+          <div class="mb-4">
+            <label class="form-label text-light">Location</label>
+            <select class="form-select" id="locationFilter">
+              <option value="">All Locations</option>
+              <option value="delhi">Delhi</option>
+              <option value="noida">Noida</option>
+              <option value="ghaziabad">Ghaziabad</option>
+            </select>
+          </div>
 
-
-
-
-<!-- Monuments Section (Now Dynamic) -->
-<div class="container mb-5">
-  <h2 class="text-warning mb-4 text-center">Monuments</h2>
-  <div class="row row-cols-1 row-cols-md-4 g-4">
-    {% for museum in museums %}
-    <div class="col">
-      <div class="card bg-secondary text-light h-100">
-          <a href="/museums/{{museum.id}}/">
-          <img 
-            src="{% static museum.image_location %}" 
-            class="card-img-top" 
-            alt="{{ museum.name }}"
-            style="height: 200px; width: 100%; object-fit: cover;"
-          >
-        </a>
-          <div class="card-body text-center">
-            <h6 class="card-title">{{ museum.name }}</h6>
+          <!-- Apply Button -->
+          <div class="d-grid mt-5 pt-5">
+            <button class="btn btn-warning" type="button" id="applyFilters">
+              Apply Filters
+            </button>
           </div>
         </div>
       </div>
-    {% endfor %}
+    </div>
+
+    <!-- Increased main content width from col-md-9 to col-md-10 -->
+    <div class="col-md-10">
+      <div class="container">
+        <h2 class="text-warning mb-4 text-center">PLACES TO VISIT</h2>
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+          {% for museum in museums %}
+          <div class="col">
+            <div class="card bg-secondary text-light h-100">
+              <a href="/museums/{{museum.id}}/">
+                <img 
+                  src="{% static museum.image_location %}" 
+                  class="card-img-top" 
+                  alt="{{ museum.name }}"
+                  style="height: 200px; width: 100%; object-fit: cover;"
+                >
+              </a>
+              <div class="card-body text-center">
+                <h6 class="card-title">{{ museum.name }}</h6>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
