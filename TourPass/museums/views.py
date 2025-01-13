@@ -7,6 +7,7 @@ from django.http import HttpResponseBadRequest
 import razorpay
 from django.conf import settings
 from django.core.mail import send_mail
+from django.contrib import messages
 
 
 # Create your views here.
@@ -24,7 +25,7 @@ def museum_detail_view(request,pk):
     museum = get_object_or_404(Museum, pk=pk)
     return render(request,'museum_detail.html',{'museum':museum})
 
-@login_required
+
 def book_ticket_view(request, museum_id):
     if request.method == 'POST':
         museum = get_object_or_404(Museum, pk=museum_id)
@@ -45,13 +46,14 @@ def book_ticket_view(request, museum_id):
 
             return redirect('payment_page', booking_id=booking.id)
         except ValueError as e:
-            return HttpResponseBadRequest(f'Invalid input: {str(e)}')
+            messages.error(request, "Please login to continue")
+            return redirect("login")
         except Exception as e:
             return HttpResponseBadRequest(f'Booking failed: {str(e)}')
             
     return HttpResponseBadRequest('Invalid request.')
 
-# @login_required
+@login_required
 def payment_view(request,booking_id):
     booking = get_object_or_404(
         Booking, 

@@ -19,13 +19,17 @@ from django.urls import path,include
 from django.contrib.auth import views as auth_views
 from . import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home,name='home'),
     path('login/', views.login_view, name='login'),
+
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
     path('signup/',views.register_view,name='signup'),
     path('logout/',views.logout_view,name='logout'),
     path('profile/',views.profile_view,name='profile'),
-    path('museums/',include('museums.urls'))
+    path('museums/',include('museums.urls')),
+    path('accounts/', include('allauth.urls')),
+
 ]

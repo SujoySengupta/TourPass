@@ -18,6 +18,9 @@ body {
 .text-orange {
     color: #ff6600 !important;
 }
+.transparent{
+    background-color: transparent !important;
+}
 
 .profile-dropdown {
     position: relative;

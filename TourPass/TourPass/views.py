@@ -3,11 +3,13 @@ from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth import login,logout,authenticate
 from museums.models import *
 from django.contrib.auth.models import User
-
+from allauth.socialaccount.models import SocialAccount
 
 def home(request):
     museums = Museum.objects.all().order_by('name')
     return render(request,'index.html',{'museums':museums})
+
+
 
 def login_view(request):
     if request.method == 'POST':
