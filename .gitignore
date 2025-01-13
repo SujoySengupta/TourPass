@@ -64,10 +64,11 @@ coverage.xml
 
 # Project specific
 node_modules/
-/static/
 .pytest_cache/
 celerybeat-schedule
 celerybeat.pid 
 
 # Database
 db.sqlite3 
+
+
