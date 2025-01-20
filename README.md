@@ -12,6 +12,7 @@ TourPass is a modern web application that simplifies museum ticket booking and m
 
 https://drive.google.com/file/d/105SS8GHsgQbeUbpo0ulKrCiw5S3k9nm2/view?usp=sharing
 [![Video Preview](https://drive.google.com/file/d/105SS8GHsgQbeUbpo0ulKrCiw5S3k9nm2/view?usp=sharing)](https://drive.google.com/file/d/105SS8GHsgQbeUbpo0ulKrCiw5S3k9nm2/view?usp=sharing)
+[![Video Preview](https://via.placeholder.com/600x400.png?text=Video+Preview)](https://drive.google.com/uc?id=105SS8GHsgQbeUbpo0ulKrCiw5S3k9nm2)
 
 ## Features
 
