@@ -10,7 +10,7 @@ TourPass is a modern web application that simplifies museum ticket booking and m
   - Abhijeet Dutta ([abhijit-dutta](https://github.com/abhijit-dutta))
   - Sujoy Sengupta ([SujoySengupta](https://github.com/SujoySengupta))
 
-<iframe src="https://drive.google.com/file/d/105SS8GHsgQbeUbpo0ulKrCiw5S3k9nm2/view?usp=sharing" width="640" height="360" allow="autoplay"></iframe>
+https://drive.google.com/file/d/105SS8GHsgQbeUbpo0ulKrCiw5S3k9nm2/view?usp=sharing
 
 ## Features
 
